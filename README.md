@@ -1,33 +1,82 @@
 # CLAIM.IO
 
-A small multiplayer territory-control game built for a €0-first prototype workflow.
+CLAIM.IO is a small browser-first territory-capture game prototype.
 
-## MVP v0.1
+## Current prototype: v0.1
 
-- Phaser 3 + TypeScript + Vite
-- Single local player
-- Grid-based territory
-- Trail while outside owned territory
-- Territory capture when returning home
-- Death when crossing the active trail
-- Reset / restart
+The current build contains the core single-player loop:
 
-## Development
+- Move with WASD or arrow keys.
+- Start inside your territory.
+- Leave your territory to create a trail.
+- Return to owned territory to claim enclosed space.
+- Touching your own trail ends the run.
+- Press `R` after losing to restart.
+- The HUD shows the percentage of the map you own.
+
+## Run locally
+
+Requirements: Node.js 20+ and npm.
 
 ```bash
 npm install
 npm run dev
 ```
 
-The first milestone is deliberately small: prove that moving out, drawing a trail, returning home, and capturing territory feels good before adding bots or multiplayer.
+Vite will print the local URL, normally `http://localhost:5173`.
 
-## Planned stack
+For a production build:
 
-- Client: Phaser + TypeScript
-- Multiplayer: Colyseus + Node.js
-- Repository: GitHub
-- Steam client: later, after the core loop is validated
+```bash
+npm run build
+```
 
-## License
+The browser bundle is generated in `client/dist`.
 
-Project code is not licensed for reuse yet. Third-party dependencies keep their own licenses; review every dependency before commercial distribution.
+## Cloudflare Pages test deployment
+
+Cloudflare Pages can connect directly to this GitHub repository and automatically deploy every push. Use:
+
+- Production branch: `main`
+- Build command: `npm run build`
+- Build output directory: `client/dist`
+
+Cloudflare will provide a `*.pages.dev` URL. Use that URL to test the current browser build on desktop and mobile browsers.
+
+## Test checklist
+
+### Core movement
+
+- [ ] WASD moves the player.
+- [ ] Arrow keys move the player.
+- [ ] The player cannot reverse direction directly into itself.
+- [ ] Leaving the territory creates a visible trail.
+
+### Claiming
+
+- [ ] Returning to owned territory claims the enclosed area.
+- [ ] The territory percentage increases when space is captured.
+- [ ] The trail disappears after a successful claim.
+
+### Losing
+
+- [ ] Hitting the map boundary ends the run.
+- [ ] Crossing the player's trail ends the run.
+- [ ] The Game Over message shows the final territory percentage.
+- [ ] `R` starts a fresh run.
+
+### Browser compatibility
+
+- [ ] Chrome/Edge desktop
+- [ ] Firefox desktop
+- [ ] Safari desktop/iOS
+- [ ] Android Chrome
+
+## Roadmap
+
+1. v0.1 — core territory loop
+2. v0.2 — bots and better collision/game feel
+3. v0.3 — authoritative multiplayer with Colyseus
+4. v0.4 — match flow and leaderboard
+5. v0.5 — resources, power-ups and progression
+6. v1.0 — Steam build and Steamworks integration
